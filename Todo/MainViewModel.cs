@@ -11,12 +11,14 @@ using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Threading;
 
 namespace Todo
 {
     public class MainViewModel : ViewModelBase
     {
         private readonly string _filePath = "saveDat.json";
+        private readonly DispatcherTimer _alarmTimer;
 
         public ObservableCollection<TodoItem> Items { get; } = new();
 
@@ -44,6 +46,13 @@ namespace Todo
             LoadCommand = new RelayCommand<object>(Load);
 
             Load(false);
+
+            _alarmTimer = new DispatcherTimer
+            {
+                Interval = TimeSpan.FromSeconds(1)
+            };
+            _alarmTimer.Tick += CheckAlarms;
+            _alarmTimer.Start();
         }
 
         private void AddItem()
@@ -57,6 +66,21 @@ namespace Todo
             if (item != null)
             {
                 Items.Remove(item);
+            }
+        }
+
+        private void CheckAlarms(object? sender, EventArgs e)
+        {
+            var now = DateTime.Now;
+
+            foreach (var item in Items)
+            {
+                if (item.AlarmTime.HasValue && item.AlarmTime <= now)
+                {
+                    MessageBox.Show($"[알림] {item.Title}", "할 일 알림", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                    item.AlarmTime = null;
+                }
             }
         }
 

@@ -12,6 +12,7 @@ namespace Todo
         private string _title = string.Empty;
         private bool _isDone;
         private string _note = string.Empty;
+        private DateTime? _alarmTime;
 
         public string Title
         {
@@ -40,6 +41,16 @@ namespace Todo
             {
                 _note = value;
                 OnPropertyChanged(nameof(Note));
+            }
+        }
+
+        public DateTime? AlarmTime
+        {
+            get => _alarmTime;
+            set
+            {
+                _alarmTime = value;
+                OnPropertyChanged(nameof(AlarmTime));
             }
         }
     }

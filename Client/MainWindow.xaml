@@ -29,6 +29,6 @@
             <Button Content="설정" Width="50" Margin="10, 0, 0, 0" Command="{Binding SetNameCommand}"/>
         </StackPanel>
         <TextBox Grid.Row="3" Height="30" Text="{Binding InputText, UpdateSourceTrigger=PropertyChanged}" KeyDown="MessageBox_KeyDown" Margin="0,0,0,5"/>
-        <Button Grid.Row="4" Height="30" Content="전송" Command="{Binding SendCommand}"/>
+        <Button Grid.Row="4" Height="30" Content="전송" Command="{Binding SendCommand}" Background="#FF00BEFF" Foreground="#FFFF8100" FontFamily="Segoe UI Variable Text Semibold" FontWeight="Bold" FontSize="16"/>
     </Grid>
 </Window>
